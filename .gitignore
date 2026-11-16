@@ -1,0 +1,5 @@
+﻿node_modules/
+.git/
+test_*.cjs
+*.log
+screenshot_*.png
