@@ -717,26 +717,6 @@ function LotDateComponent({ lotDateList = [], isLoading = false, onRefresh, onNa
                               }
                             },
                             className: 'max-w-full max-h-[600px] object-contain rounded-xl transition-all duration-200 group-hover:scale-[1.01] ' + (imgLoaded ? 'opacity-100' : 'opacity-0')
-                          }),
-                          (0, H.jsxs)('div', {
-                            className: 'absolute top-3 right-3 flex items-center space-x-1.5 bg-slate-950/80 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/15 text-white shadow-lg',
-                            children: [
-                              (0, H.jsx)('button', {
-                                onClick: (e) => { e.stopPropagation(); setIsLightboxOpen(true); },
-                                title: 'Phóng to ảnh (Lightbox)',
-                                className: 'p-1 hover:text-blue-400 hover:bg-white/10 rounded-lg transition',
-                                children: (0, H.jsx)(Ge, { className: 'w-4 h-4' })
-                              }),
-                              (0, H.jsx)('a', {
-                                href: selectedItem.imageUrl,
-                                target: '_blank',
-                                rel: 'noopener noreferrer',
-                                onClick: (e) => e.stopPropagation(),
-                                title: 'Mở ảnh trong tab mới',
-                                className: 'p-1 hover:text-blue-400 hover:bg-white/10 rounded-lg transition',
-                                children: (0, H.jsx)(V, { className: 'w-4 h-4' })
-                              })
-                            ]
                           })
                         ]
                       })
