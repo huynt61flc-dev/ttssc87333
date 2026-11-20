@@ -252,6 +252,18 @@ function normalizeGoogleDriveUrl(url) {
   return url;
 }
 
+function getWebRtcStreamUrl(rtsp) {
+  if (!rtsp || typeof rtsp !== 'string') return '';
+  let stream = rtsp.trim();
+  if (!stream) return '';
+  if (stream.includes('/Channels/101')) {
+    stream = stream.replace('/Channels/101', '/Channels/102');
+  } else if (stream.includes('/101/')) {
+    stream = stream.replace('/101/', '/102/');
+  }
+  return 'http://localhost:1984/stream.html?src=' + encodeURIComponent(stream);
+}
+
 const defaultLotDateList = [{"id":"LD-1","productCode":"00005713","productName":"PANADOL EXTRA 15X12 ĐỎ","imageUrl":"https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80"},{"id":"LD-2","productCode":"00000001","productName":"Panadol Extra Đỏ (Hộp 15 vỉ x 12 viên)","imageUrl":"https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80"},{"id":"LD-3","productCode":"00000002","productName":"Berocca Performance Cam (Tuýp 10 viên sủi)","imageUrl":"https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=800&auto=format&fit=crop&q=80"},{"id":"LD-4","productCode":"00000003","productName":"Siro Ho Prospan Engelhard (Chai 100ml)","imageUrl":"https://images.unsplash.com/photo-1514733670139-4d87a1941d55?w=800&auto=format&fit=crop&q=80"},{"id":"LD-5","productCode":"00000004","productName":"Dung Dịch Nhỏ Mắt Tobradex Alcon (Lọ 5ml)","imageUrl":"https://images.unsplash.com/photo-1576602976047-174e57a47881?w=800&auto=format&fit=crop&q=80"},{"id":"LD-6","productCode":"00000005","productName":"Men Vi Sinh Enterogermina 4 Tỷ Sanofi (Hộp 20 ống)","imageUrl":"https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&auto=format&fit=crop&q=80"},{"id":"LD-7","productCode":"00000006","productName":"Nước Muối Sinh Lý Physiodose Gilbert (Hộp 40 tép)","imageUrl":"https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&auto=format&fit=crop&q=80"}];
 
 async function fetchLotDateData() {
@@ -800,6 +812,12 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
   const containerRef = (0, v.useRef)(null);
   const searchInputRef = (0, v.useRef)(null);
 
+  (0, v.useEffect)(() => {
+    if (typeof window !== 'undefined' && window.location.protocol === 'https:' && window.location.hostname === '87333.io.vn') {
+      window.location.href = window.location.href.replace('https://', 'http://');
+    }
+  }, []);
+
   const cleanQuery = (query || '').trim().toLowerCase();
 
   const suggestions = (0, v.useMemo)(() => {
@@ -1222,32 +1240,11 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                         style: { maxWidth: '96%', maxHeight: '520px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }
                       })
                     ) : (
-                      (0, H.jsxs)(H.Fragment, {
-                        children: [
-                          selectedShop.cameraWeb && (0, H.jsx)('iframe', {
-                            src: selectedShop.cameraWeb,
-                            title: selectedShop.shopName,
-                            allow: 'autoplay; fullscreen',
-                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', backgroundColor: '#000000', zIndex: 1 }
-                          }),
-                          (0, H.jsx)('embed', {
-                            type: 'application/x-vlc-plugin',
-                            pluginspage: 'http://www.videolan.org',
-                            version: 'VideoLAN.VLCPlugin.2',
-                            id: 'vlc-player',
-                            target: selectedShop.rtspUrl,
-                            autoplay: 'true',
-                            loop: 'no',
-                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', zIndex: selectedShop.cameraWeb ? 0 : 2 }
-                          }),
-                          (0, H.jsx)('video', {
-                            src: selectedShop.rtspUrl,
-                            autoPlay: true,
-                            controls: true,
-                            playsInline: true,
-                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: selectedShop.cameraWeb ? 0 : 2 }
-                          })
-                        ]
+                      (0, H.jsx)('iframe', {
+                        src: getWebRtcStreamUrl(selectedShop.rtspUrl),
+                        title: selectedShop.shopName,
+                        allow: 'autoplay; fullscreen',
+                        style: { width: '100%', height: '100%', border: 'none', backgroundColor: '#000000' }
                       })
                     )
                   ]
