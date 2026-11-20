@@ -1103,20 +1103,6 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                     (0, H.jsx)('span', { className: 'text-base font-bold text-slate-900 break-words', children: selectedShop.shopName }),
                     (0, H.jsxs)('span', { className: 'text-xs font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md shrink-0', children: ['Mã: ', selectedShop.shopCode] })
                   ]
-                }),
-                (0, H.jsxs)('div', {
-                  className: 'flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600',
-                  children: [
-                    (0, H.jsxs)('span', {
-                      className: 'font-mono font-semibold',
-                      children: ['IP: ', selectedShop.ip || '---']
-                    }),
-                    selectedShop.rtspUrl && (0, H.jsxs)('span', {
-                      className: 'font-mono text-slate-500 truncate max-w-xs sm:max-w-md',
-                      title: selectedShop.rtspUrl,
-                      children: ['RTSP (Cột G): ', selectedShop.rtspUrl]
-                    })
-                  ]
                 })
               ]
             }),
@@ -1152,37 +1138,6 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                   className: 'px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer',
                   title: 'Ping lại',
                   children: 'Ping lại'
-                }),
-                selectedShop.rtspUrl && (0, H.jsxs)('button', {
-                  onClick: copyRtsp,
-                  className: 'px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center space-x-1 cursor-pointer',
-                  title: 'Sao chép link RTSP',
-                  children: [
-                    (0, H.jsx)(CopyIcon, { className: 'w-3.5 h-3.5' }),
-                    (0, H.jsx)('span', { children: isCopied ? 'Đã chép!' : 'Copy RTSP' })
-                  ]
-                }),
-                selectedShop.rtspUrl && (0, H.jsxs)('button', {
-                  onClick: openInVlc,
-                  style: {
-                    backgroundColor: '#ea580c',
-                    color: '#ffffff',
-                    fontWeight: 'bold',
-                    padding: '6px 14px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 4px rgba(234, 88, 12, 0.3)'
-                  },
-                  title: 'Mở trực tiếp bằng phần mềm VLC',
-                  children: [
-                    (0, H.jsx)(PlayIcon, { className: 'w-3.5 h-3.5 fill-current' }),
-                    (0, H.jsx)('span', { children: 'Mở VLC' })
-                  ]
                 })
               ]
             })
@@ -1190,7 +1145,7 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
         })
       ),
 
-      // MAIN SCREEN: RTSP STREAM PLAYER (VLC)
+      // MAIN SCREEN: RTSP STREAM PLAYER
       (0, H.jsxs)('div', {
         style: {
           backgroundColor: '#0f172a',
@@ -1203,7 +1158,7 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
         },
         children: [
           // Player Top Bar
-          (0, H.jsxs)('div', {
+          (0, H.jsx)('div', {
             style: {
               backgroundColor: '#1e293b',
               padding: '10px 16px',
@@ -1215,58 +1170,31 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
               fontSize: '12px',
               zIndex: 10
             },
-            children: [
-              (0, H.jsxs)('div', {
-                style: { display: 'flex', alignItems: 'center', gap: '8px' },
-                children: [
-                  (0, H.jsx)(TvIcon, { className: 'w-4 h-4', style: { color: '#fb923c' } }),
-                  (0, H.jsx)('span', { style: { fontWeight: 'bold', letterSpacing: '0.05em', textTransform: 'uppercase' }, children: 'MÀN HÌNH CHÍNH LUỒNG RTSP' }),
-                  selectedShop && selectedShop.rtspUrl && (0, H.jsxs)('span', {
-                    style: {
-                      backgroundColor: '#dc2626',
-                      color: '#ffffff',
-                      fontSize: '10px',
-                      fontWeight: 'bold',
-                      letterSpacing: '0.05em',
-                      padding: '2px 8px',
-                      borderRadius: '4px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    },
-                    children: [
-                      (0, H.jsx)('span', { style: { width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#ffffff' } }),
-                      (0, H.jsx)('span', { children: 'LIVE' })
-                    ]
-                  })
-                ]
-              }),
-              selectedShop && selectedShop.rtspUrl && (0, H.jsxs)('div', {
-                style: { display: 'flex', alignItems: 'center', gap: '8px' },
-                children: [
-                  (0, H.jsxs)('button', {
-                    onClick: openInVlc,
-                    style: {
-                      backgroundColor: '#ea580c',
-                      color: '#ffffff',
-                      fontWeight: 'bold',
-                      fontSize: '11px',
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      border: 'none',
-                      cursor: 'pointer'
-                    },
-                    children: [
-                      (0, H.jsx)(PlayIcon, { className: 'w-3 h-3 fill-current' }),
-                      (0, H.jsx)('span', { children: 'Mở VLC' })
-                    ]
-                  })
-                ]
-              })
-            ]
+            children: (0, H.jsxs)('div', {
+              style: { display: 'flex', alignItems: 'center', gap: '8px' },
+              children: [
+                (0, H.jsx)(TvIcon, { className: 'w-4 h-4', style: { color: '#fb923c' } }),
+                (0, H.jsx)('span', { style: { fontWeight: 'bold', letterSpacing: '0.05em', textTransform: 'uppercase' }, children: 'MÀN HÌNH CHÍNH LUỒNG RTSP' }),
+                selectedShop && (selectedShop.rtspUrl || selectedShop.cameraWeb) && (0, H.jsxs)('span', {
+                  style: {
+                    backgroundColor: '#dc2626',
+                    color: '#ffffff',
+                    fontSize: '10px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.05em',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  },
+                  children: [
+                    (0, H.jsx)('span', { style: { width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#ffffff' } }),
+                    (0, H.jsx)('span', { children: 'LIVE' })
+                  ]
+                })
+              ]
+            })
           }),
 
           // Video / Stream Screen Area
@@ -1274,8 +1202,8 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
             style: {
               position: 'relative',
               width: '100%',
-              minHeight: '440px',
-              height: '520px',
+              minHeight: '480px',
+              height: '560px',
               backgroundColor: '#020617',
               display: 'flex',
               alignItems: 'center',
@@ -1283,19 +1211,25 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
               overflow: 'hidden'
             },
             children: [
-              selectedShop && selectedShop.rtspUrl ? (
+              selectedShop && (selectedShop.rtspUrl || selectedShop.cameraWeb) ? (
                 (0, H.jsxs)('div', {
                   style: { width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' },
                   children: [
-                    (selectedShop.rtspUrl.includes('drive.google.com') || selectedShop.rtspUrl.includes('googleusercontent.com')) ? (
+                    (selectedShop.rtspUrl && (selectedShop.rtspUrl.includes('drive.google.com') || selectedShop.rtspUrl.includes('googleusercontent.com'))) ? (
                       (0, H.jsx)('img', {
                         src: normalizeGoogleDriveUrl(selectedShop.rtspUrl),
                         alt: selectedShop.shopName,
-                        style: { maxWidth: '96%', maxHeight: '420px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }
+                        style: { maxWidth: '96%', maxHeight: '520px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }
                       })
                     ) : (
                       (0, H.jsxs)(H.Fragment, {
                         children: [
+                          selectedShop.cameraWeb && (0, H.jsx)('iframe', {
+                            src: selectedShop.cameraWeb,
+                            title: selectedShop.shopName,
+                            allow: 'autoplay; fullscreen',
+                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', backgroundColor: '#000000', zIndex: 1 }
+                          }),
                           (0, H.jsx)('embed', {
                             type: 'application/x-vlc-plugin',
                             pluginspage: 'http://www.videolan.org',
@@ -1304,82 +1238,18 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                             target: selectedShop.rtspUrl,
                             autoplay: 'true',
                             loop: 'no',
-                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }
+                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', zIndex: selectedShop.cameraWeb ? 0 : 2 }
                           }),
                           (0, H.jsx)('video', {
                             src: selectedShop.rtspUrl,
                             autoPlay: true,
                             controls: true,
                             playsInline: true,
-                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain' }
+                            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: selectedShop.cameraWeb ? 0 : 2 }
                           })
                         ]
                       })
-                    ),
-                    // Fast action overlay at bottom of screen
-                    (0, H.jsxs)('div', {
-                      style: {
-                        position: 'absolute',
-                        bottom: '16px',
-                        left: '16px',
-                        right: '16px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '12px 16px',
-                        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                        backdropFilter: 'blur(8px)',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        zIndex: 20
-                      },
-                      children: [
-                        (0, H.jsxs)('div', {
-                          style: { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '12px', fontFamily: 'monospace', fontSize: '12px', color: '#fed7aa' },
-                          children: ['Luồng RTSP: ', selectedShop.rtspUrl]
-                        }),
-                        (0, H.jsxs)('div', {
-                          style: { display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 },
-                          children: [
-                            (0, H.jsxs)('button', {
-                              onClick: openInVlc,
-                              style: {
-                                backgroundColor: '#ea580c',
-                                color: '#ffffff',
-                                fontWeight: 'bold',
-                                fontSize: '12px',
-                                padding: '6px 14px',
-                                borderRadius: '8px',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                border: 'none',
-                                cursor: 'pointer',
-                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)'
-                              },
-                              children: [
-                                (0, H.jsx)(PlayIcon, { className: 'w-3.5 h-3.5 fill-current' }),
-                                (0, H.jsx)('span', { children: 'Phát trên VLC Player' })
-                              ]
-                            }),
-                            (0, H.jsx)('button', {
-                              onClick: copyRtsp,
-                              style: {
-                                backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                                color: '#ffffff',
-                                fontSize: '12px',
-                                fontWeight: 600,
-                                padding: '6px 12px',
-                                borderRadius: '8px',
-                                border: 'none',
-                                cursor: 'pointer'
-                              },
-                              children: isCopied ? 'Đã copy' : 'Copy link'
-                            })
-                          ]
-                        })
-                      ]
-                    })
+                    )
                   ]
                 })
               ) : (
@@ -1403,11 +1273,7 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                     }),
                     (0, H.jsx)('h3', {
                       style: { fontSize: '15px', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '6px' },
-                      children: selectedShop ? 'Shop này chưa có luồng RTSP ở Cột G' : 'Màn hình luồng RTSP VLC'
-                    }),
-                    (0, H.jsx)('p', {
-                      style: { fontSize: '12px', color: '#64748b', lineHeight: 1.5 },
-                      children: selectedShop ? 'Vui lòng kiểm tra và cập nhật Cột G trong Google Sheet.' : 'Nhập mã shop ở thanh tìm kiếm phía trên để kết nối luồng camera.'
+                      children: selectedShop ? 'Chưa có luồng phát' : 'Màn hình phát trực tiếp'
                     })
                   ]
                 })
