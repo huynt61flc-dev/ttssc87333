@@ -812,12 +812,6 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
   const containerRef = (0, v.useRef)(null);
   const searchInputRef = (0, v.useRef)(null);
 
-  (0, v.useEffect)(() => {
-    if (typeof window !== 'undefined' && window.location.protocol === 'https:' && window.location.hostname === '87333.io.vn') {
-      window.location.href = window.location.href.replace('https://', 'http://');
-    }
-  }, []);
-
   const cleanQuery = (query || '').trim().toLowerCase();
 
   const suggestions = (0, v.useMemo)(() => {
@@ -1240,11 +1234,36 @@ function PingTestComponent({ pingTestList = [], isLoading = false, onRefresh, on
                         style: { maxWidth: '96%', maxHeight: '520px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }
                       })
                     ) : (
-                      (0, H.jsx)('iframe', {
-                        src: getWebRtcStreamUrl(selectedShop.rtspUrl),
-                        title: selectedShop.shopName,
-                        allow: 'autoplay; fullscreen',
-                        style: { width: '100%', height: '100%', border: 'none', backgroundColor: '#000000' }
+                      (0, H.jsxs)('div', {
+                        style: { width: '100%', height: '100%', position: 'relative' },
+                        children: [
+                          (0, H.jsx)('iframe', {
+                            src: getWebRtcStreamUrl(selectedShop.rtspUrl),
+                            title: selectedShop.shopName,
+                            allow: 'autoplay; fullscreen',
+                            style: { width: '100%', height: '100%', border: 'none', backgroundColor: '#000000' }
+                          }),
+                          (0, H.jsx)('button', {
+                            onClick: () => window.open(getWebRtcStreamUrl(selectedShop.rtspUrl), '_blank'),
+                            style: {
+                              position: 'absolute',
+                              bottom: '12px',
+                              right: '12px',
+                              backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                              color: '#ffffff',
+                              border: '1px solid rgba(255, 255, 255, 0.2)',
+                              borderRadius: '8px',
+                              padding: '6px 12px',
+                              fontSize: '11px',
+                              fontWeight: 'bold',
+                              cursor: 'pointer',
+                              backdropFilter: 'blur(4px)',
+                              zIndex: 10
+                            },
+                            title: 'Mở cửa sổ xem trực tiếp WebRTC',
+                            children: '⛶ Mở rộng toàn màn hình'
+                          })
+                        ]
                       })
                     )
                   ]
